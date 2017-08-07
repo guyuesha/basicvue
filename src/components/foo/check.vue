@@ -3,13 +3,16 @@
     <el-checkbox class="checkAll" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">华东</el-checkbox>
     <el-checkbox-group class="checkGroup" v-model="checkedCities" @change="handleCheckedCitiesChange">
       <template v-for="city in cities">
-        <el-checkbox :label="city" :key="city" class="check" @change="chooseProvince(city)">{{city}}
+        <el-checkbox :label="city" :key="city" class="check" @change="choosedistrict(city)">{{city}}
         </el-checkbox>
         <div class="pop">
           <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click="showDistrict(city)"></i>
           <div class="popover" v-show="currentSelection===city">
-            <el-checkbox v-for="pro in province[city]" :label="pro" :key="pro" class="check">
-              {{pro}}</el-checkbox>
+            <el-checkbox-group class="checkGroup" v-model="checkedDistrict" @change="handleCheckedDistrict">
+              <el-checkbox v-for="pro in district[city]" :label="pro" :key="pro" class="check-sub">
+                {{pro}}</el-checkbox>
+            </el-checkbox-group>
+
           </div>
         </div>
       </template>
@@ -19,7 +22,7 @@
 
 <script>
   const cityOptions = ['上海', '北京', '广州', '深圳'];
-  const province = {
+  const district = {
     '上海': ['上海1', '上海2', '上海3'],
     '北京': ['北京1', '北京2', '北京3'],
     '广州': ['广州1', '广州2', '广州3'],
@@ -30,10 +33,10 @@
       return {
         checkAll: true,
         checkedCities: ['上海', '北京'],
+        checkedDistrict: ['上海1', '上海2'],
         cities: cityOptions,
         isIndeterminate: true,
-        checked: true,
-        province: Object.assign(province),
+        district: Object.assign(district),
         currentSelection: '上海'
       };
     },
@@ -46,7 +49,14 @@
         let checkedCount = value.length;
         this.checkAll = checkedCount === this.cities.length;
         this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
-        console.log('chos pro ', value);
+        console.log('chos pro ', this.checkedCities, 'value', value);
+
+      },
+      handleCheckedDistrict(value) {
+        let checkedCount = value.length;
+        this.checkAll = checkedCount === this.cities.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+        console.log('chos pro2 ', this.checkedCities, 'value', value);
 
       },
       showDistrict(city) {
@@ -56,7 +66,7 @@
           this.currentSelection = city;
         }
       },
-      chooseProvince() {
+      choosedistrict() {
 
       }
     }
@@ -81,6 +91,10 @@
 
   .check {
     width: 60px;
+  }
+
+  .check-sub {
+    width: 90px;
   }
 
   .pop {
