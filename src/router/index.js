@@ -4,6 +4,7 @@ import Hello from '@/components/Hello'
 import Foo from '@/components/foo/index.vue'
 import FooChild1 from '@/components/foo/child1.vue'
 import FooChild2 from '@/components/foo/child2.vue'
+import Address from '@/components/foo/check.vue'
 
 Vue.use(Router)
 
@@ -25,6 +26,9 @@ export default new Router({
             }, {
                 path: '',
                 component: FooChild2
+            }, {
+                path: 'address',
+                component: Address
             }]
         }
     ]
