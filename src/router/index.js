@@ -5,6 +5,7 @@ import Foo from '@/components/foo/index.vue'
 import FooChild1 from '@/components/foo/child1.vue'
 import FooChild2 from '@/components/foo/child2.vue'
 import Address from '@/components/foo/check.vue'
+import editor from '@/components/foo/editor.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,9 @@ export default new Router({
             }, {
                 path: 'address',
                 component: Address
+            }, {
+                path: 'editor',
+                component: editor
             }]
         }
     ]
