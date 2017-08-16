@@ -13,7 +13,7 @@
       </div>    
 </template>
 <script>
-import {getDetail} from '../service.js'
+import {getDetail, getList, getAll} from '../service.js'
 export default {
   data() {
      return {
@@ -26,7 +26,7 @@ export default {
       query1: 1,
       query2: 2
       };
-    getDetail(params).then((res) => {
+   return getDetail(params).then((res) => {
       console.log('detail init get ',res);
       this.list = res.data.data;
     }).catch((res) => {
@@ -35,7 +35,26 @@ export default {
     }
   },
   mounted() {
-    this.init()
+      let params = {
+      query1: 1,
+      query2: 2
+      };
+    Promise.all([getDetail(params),getList()]).then((res)=>{
+      console.log('get res', res);
+    }).catch((res)=>{
+      console.log('get erro ', res)
+    })
+    // getAll().then((res, two)=>{
+    //    console.log( 'init', res, two);
+    //  }).catch((res)=>{
+    //    console.log('get erro ', res)
+    //  });
+    // this.init()
+    // this.init().then((res)=>{
+    //   console.log( 'init',this.list);
+    // });
+
+    
   }
 }
 </script>
