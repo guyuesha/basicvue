@@ -10,10 +10,10 @@
         :indeterminate="district[city].isIndeterminate" 
         v-model="district[city].checkAll" @change="handleCheckCityChange($event, city)">{{city}}</el-checkbox> -->
         <div class="pop" :key="index">
-          <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click="showDistrict(city)"></i>
+          <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click="showDistrict($event,city)"></i>
           <div class="popover" v-show="currentSelection===city">
-            <el-checkbox-group class="checkGroup" v-model="district[city].listChecked" @change="handleCheckedDistrict">
-              <el-checkbox v-for="pro in district[city].list" :label="pro" :key="pro" class="check-sub">
+            <el-checkbox-group class="checkGroup" v-model="district[city].listChecked" >
+              <el-checkbox v-for="pro in district[city].list" :label="pro" :key="pro" class="check-sub" @click="handleCheckedDistrict($event)">
                 {{pro}}</el-checkbox>
             </el-checkbox-group>
           </div>
@@ -137,7 +137,11 @@
         }
         console.log('city click handleCheckedCityChange ', city,this.district[city])
       }, 
-      handleCheckedDistrict(value) {
+      handleCheckedDistrict(e) {
+        e.stopPropagation();
+        e.preventDefault();
+        let value = this.district[currentSelection].listChecked;
+        console.log('value ', value)
         let checkedCount = value.length;
         let districtOne = this.district[this.currentSelection];
         districtOne.checkedAll = checkedCount === districtOne.list.length;
@@ -148,7 +152,11 @@
           districtOne, this.checkedCities);
 
       },
-      showDistrict(city) {
+      hideDistrict(){
+this.currentSelection = '';
+      },
+      showDistrict(e,city) {
+        e.stopPropagation();
         if (this.currentSelection === city) {
           this.currentSelection = '';
         } else {
@@ -161,6 +169,7 @@
     },
     mounted() {
       console.log(this.district);
+      document.addEventListener('click', this.hideDistrict.bind(this), false);
     }
   };
 
