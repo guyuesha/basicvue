@@ -20,200 +20,214 @@
 </template>
 
 <script>
-import areaInfo from './area.vue';
-const ainfo= [
-  {
-    name: '华东',
-    include: {
+  import areaInfo from './area.vue';
+  const ainfo = [{
+        name: '华东',
+        include: {
           '上海': {
-      list: ['上海1', '上海2', '上海3'],
-      listChecked: ['上海1'],
-      checkAll: false,
-      isIndeterminate: true
-    },
-    '北京': {
-      list: ['北京1', '北京2', '北京3'],
-      listChecked: ['北京1', '北京3'],
-      checkAll: false,
-      isIndeterminate: true
-    },
-    '广州': {
-      list: ['广州1', '广州2', '广州3'],
-      listChecked: ['广州1', '广州2', '广州3'],
-      checkAll: true,
-      isIndeterminate: false
-    },
-    }
-  },
-    {
-    name: '华北',
-    include: {
+            list: ['上海1', '上海2', '上海3'],
+            listChecked: ['上海1'],
+            checkAll: false,
+            isIndeterminate: true
+          },
+          '北京': {
+            list: ['北京1', '北京2', '北京3'],
+            listChecked: ['北京1', '北京3'],
+            checkAll: false,
+            isIndeterminate: true
+          },
+          '广州': {
+            list: ['广州1', '广州2', '广州3'],
+            listChecked: ['广州1', '广州2', '广州3'],
+            checkAll: true,
+            isIndeterminate: false
+          },
+        }
+      },
+      {
+        name: '华北',
+        include: {
           '吉林': {
-      list: ['吉林1', '吉林2', '吉林3'],
-      listChecked: ['吉林1'],
-      checkAll: false,
-      isIndeterminate: true
-    },
-    '东北': {
-      list: ['东北1', '东北2', '东北3'],
-      listChecked: ['东北1', '东北3'],
-      checkAll: false,
-      isIndeterminate: true
-    },
-
-    }
-  }
-];
-  const cityOptions = ['上海', '北京', '广州', '深圳'];
-  // const cityChecked = [true, true, false, false];
-  const district = {
-    '上海': {
-      list: ['上海1', '上海2', '上海3'],
-      listChecked: ['上海1'],
-      checkedAll: false,
-      isIndeterminate: true
-    },
-    '北京': {
-      list: ['北京1', '北京2', '北京3'],
-      listChecked: ['北京1', '北京3'],
-      checkedAll: false,
-      isIndeterminate: true
-    },
-    '广州': {
-      list: ['广州1', '广州2', '广州3'],
-      listChecked: ['广州1', '广州2', '广州3'],
-      checkedAll: true,
-      isIndeterminate: false
-    },
-    '深圳': {
-      list: ['深圳1', '深圳2', '深圳3'],
-      listChecked: ['深圳1', '深圳2', '深圳3'],
-      checkedAll: true,
-      isIndeterminate: false
-    }
-  }
-  export default {
-    data() {
-      return {
-        areaOptions: ainfo,
-        // checkAll: true,
-        // checkedCities: ['广州', '深圳'],
-        cities: cityOptions,
-        // isIndeterminate: true,
-        district: Object.assign(district),
-        currentSelection: '上海'
-      };
-    },
-    computed: {
-      isIndeterminate: {
-        get: function () {
-          return this.checkedCities.length > 0 && this.checkedCities.length !== cityOptions.length;
-        },
-        set: function () {
-
+            list: ['吉林1', '吉林2', '吉林3'],
+            listChecked: ['吉林1'],
+            checkAll: false,
+            isIndeterminate: true
+          },
+          '东北': {
+            list: ['东北1', '东北2', '东北3'],
+            listChecked: ['东北1', '东北3'],
+            checkAll: false,
+            isIndeterminate: true
+          },
+        }},
+        {
+          name: '华中',
+          include: {
+            '南昌': {
+              list: ['南昌1', '南昌2', '南昌3'],
+              listChecked: ['南昌1'],
+              checkAll: false,
+              isIndeterminate: true
+            },
+            '武汉': {
+              list: ['武汉1', '武汉2', '武汉3'],
+              listChecked: ['武汉1', '武汉3'],
+              checkAll: false,
+              isIndeterminate: true
+            },
+          }
         }
-      },
-      checkedCities: {
-        get: function () {
-          let keysArray = Object.keys(this.district);
-          let cityArray = [];
-          keysArray.forEach((item) => {
-            if (this.district[item].checkedAll === true) {
-              cityArray.push(item);
+        ];
+        const cityOptions = ['上海', '北京', '广州', '深圳'];
+        // const cityChecked = [true, true, false, false];
+        const district = {
+          '上海': {
+            list: ['上海1', '上海2', '上海3'],
+            listChecked: ['上海1'],
+            checkedAll: false,
+            isIndeterminate: true
+          },
+          '北京': {
+            list: ['北京1', '北京2', '北京3'],
+            listChecked: ['北京1', '北京3'],
+            checkedAll: false,
+            isIndeterminate: true
+          },
+          '广州': {
+            list: ['广州1', '广州2', '广州3'],
+            listChecked: ['广州1', '广州2', '广州3'],
+            checkedAll: true,
+            isIndeterminate: false
+          },
+          '深圳': {
+            list: ['深圳1', '深圳2', '深圳3'],
+            listChecked: ['深圳1', '深圳2', '深圳3'],
+            checkedAll: true,
+            isIndeterminate: false
+          }
+        }
+        export default {
+          data() {
+            return {
+              areaOptions: ainfo,
+              // checkAll: true,
+              // checkedCities: ['广州', '深圳'],
+              cities: cityOptions,
+              // isIndeterminate: true,
+              district: Object.assign(district),
+              currentSelection: '上海'
+            };
+          },
+          computed: {
+            isIndeterminate: {
+              get: function () {
+                return this.checkedCities.length > 0 && this.checkedCities.length !== cityOptions.length;
+              },
+              set: function () {
+
+              }
+            },
+            checkedCities: {
+              get: function () {
+                let keysArray = Object.keys(this.district);
+                let cityArray = [];
+                keysArray.forEach((item) => {
+                  if (this.district[item].checkedAll === true) {
+                    cityArray.push(item);
+                  }
+                });
+                return cityArray;
+              },
+              set: function (checkArray) {
+
+                let keysArray = Object.keys(this.district);
+                keysArray.forEach((item) => {
+                  if (checkArray.indexOf(item) !== -1) {
+                    this.district[item].checkedAll = true
+                  } else {
+                    this.district[item].checkedAll = false
+                  }
+                })
+              }
+            },
+            checkAll: {
+              get: function () {
+
+              },
+              set: function () {
+                return Object.keys(this.district).every((item) => {
+                  return this.district[item].checkAll === true
+                });
+              }
+
             }
-          });
-          return cityArray;
-        },
-        set: function(checkArray) {
+          },
+          methods: {
+            handleCheckAllChange(event) {
+              console.log('handleCheckAllChange ', event);
+              this.checkedCities = event.target.checked ? cityOptions : [];
+              this.isIndeterminate = false;
+              console.log('checked city ', this.checkedCities);
+            },
+            // handleCheckCityChange($event, city) {
+            //   console.log($event, city);
+            //   this.district[city].listChecked = event.target.checked ? this.district[city].list : [];
+            //   this.district[city].isIndeterminate = false;
+            //   console.log('handleCheckCityChange', this.checkedCities);
+            //   // this.checkedCities 
+            // },
+            handleCheckedCitiesChange(value) {
+              let checkedCount = value.length;
+              this.checkAll = checkedCount === cityOptions.length;
+              this.isIndeterminate = checkedCount > 0 && checkedCount < cityOptions.length;
+              console.log('handleCheckedCitiesChange ', this.checkedCities, 'value', value);
 
-           let keysArray = Object.keys(this.district);
-          keysArray.forEach((item)=>{
-            if(checkArray.indexOf(item)!==-1){
-            this.district[item].checkedAll = true
-            } else {
-            this.district[item].checkedAll =false   
+            },
+            handleCheckedCityChange(city) {
+              if (this.district[city].isIndeterminate === true) {
+                this.district[city].isIndeterminate = false;
+                this.district[city].checkedAll = true;
+              } else {
+                // this.district[city].checkedAll = !this.district[city].checkedAll;        
+              }
+              console.log('city click handleCheckedCityChange ', city, this.district[city])
+            },
+            handleCheckedDistrict(e) {
+              e.stopPropagation;
+              console.log('event ', value);
+              let checkedCount = value.length;
+              let districtOne = this.district[this.currentSelection];
+              districtOne.checkedAll = checkedCount === districtOne.list.length;
+              districtOne.isIndeterminate = checkedCount > 0 && checkedCount < districtOne.list.length;
+              // if(checkedCount.length===0) {
+              // }
+              console.log('handleCheckedDistrict ', this.checkedCities, 'value', value, 'disone ',
+                districtOne, this.checkedCities);
+
+            },
+            hideDistrict() {
+              this.currentSelection = '';
+            },
+            showDistrict(e, city) {
+              e.stopPropagation();
+              // if (this.currentSelection === city) {
+              //   this.currentSelection = '';
+              // } else {
+              this.currentSelection = this.currentSelection === '' ? city : '';
+              // }
+            },
+            choosedistrict() {
+
             }
-          })
-        }
-      },
-      checkAll: {
-        get: function () {
-          
-        },
-        set: function () {
-          return Object.keys(this.district).every((item) => {
-            return this.district[item].checkAll === true
-          });
-        }
-
-      }
-    },
-    methods: {
-      handleCheckAllChange(event) {
-        console.log('handleCheckAllChange ', event);
-        this.checkedCities = event.target.checked ? cityOptions : [];
-        this.isIndeterminate = false;
-        console.log('checked city ', this.checkedCities);
-      },
-      // handleCheckCityChange($event, city) {
-      //   console.log($event, city);
-      //   this.district[city].listChecked = event.target.checked ? this.district[city].list : [];
-      //   this.district[city].isIndeterminate = false;
-      //   console.log('handleCheckCityChange', this.checkedCities);
-      //   // this.checkedCities 
-      // },
-      handleCheckedCitiesChange(value) {
-        let checkedCount = value.length;
-        this.checkAll = checkedCount === cityOptions.length;
-        this.isIndeterminate = checkedCount > 0 && checkedCount < cityOptions.length;
-        console.log('handleCheckedCitiesChange ', this.checkedCities, 'value', value);
-
-      },
-      handleCheckedCityChange(city) {
-        if(this.district[city].isIndeterminate===true) {
-          this.district[city].isIndeterminate = false;
-          this.district[city].checkedAll = true;
-        } else {
-          // this.district[city].checkedAll = !this.district[city].checkedAll;        
-        }
-        console.log('city click handleCheckedCityChange ', city,this.district[city])
-      }, 
-      handleCheckedDistrict(e) {
-        e.stopPropagation;
-        console.log('event ',value);
-        let checkedCount = value.length;
-        let districtOne = this.district[this.currentSelection];
-        districtOne.checkedAll = checkedCount === districtOne.list.length;
-        districtOne.isIndeterminate = checkedCount > 0 && checkedCount < districtOne.list.length;
-        // if(checkedCount.length===0) {
-        // }
-        console.log('handleCheckedDistrict ', this.checkedCities, 'value', value, 'disone ',
-          districtOne, this.checkedCities);
-
-      },
-      hideDistrict(){
-        this.currentSelection = '';
-      },
-      showDistrict(e,city) {
-        e.stopPropagation();
-        // if (this.currentSelection === city) {
-        //   this.currentSelection = '';
-        // } else {
-          this.currentSelection = this.currentSelection === ''?city: '';
-        // }
-      },
-      choosedistrict() {
-
-      }
-    },
-    components: {
-      areaInfo
-    },
-    mounted() {
-      console.log(this.district);
-      document.addEventListener('click', this.hideDistrict.bind(this), false);
-    }
-  };
+          },
+          components: {
+            areaInfo
+          },
+          mounted() {
+            console.log(this.district);
+            document.addEventListener('click', this.hideDistrict.bind(this), false);
+          }
+        };
 
 </script>
 <style scoped>

@@ -2,7 +2,7 @@
     <div>
         <el-dialog title="选择区域" :visible.sync="areaVisition" size="large" :close-on-click-modal="false">
              <template v-for="(area, index) in areaOptions"> 
-                <onearea :key="area.name" :cities="Object.keys(area.include)" 
+                <onearea :key="area.name" :cities="Object.keys(area.include)" :ref="area.name"
                 :district="area.include" :areas="area.name">
                 </onearea>
             </template>

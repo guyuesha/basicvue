@@ -4,13 +4,15 @@
     <template v-for="(city, index) in cities">
       <el-checkbox class="check-sub" :label="city" :key="city" @change="handleCheckedCityChange(city)" v-model="district[city].checkAll"
         :indeterminate="district[city].isIndeterminate">{{city}}</el-checkbox>
-      <div class="pop" :key="index">
-        <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click="showDistrict(city)"></i>
+      <div class="pop" :key="index" @click.stop>
+        <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click.stop="showDistrict(city)"></i>
         <div class="popover" v-show="currentSelection===city">
-          <el-checkbox-group class="checkGroup" v-model="district[city].listChecked" @change="handleCheckedDistrict">
-            <el-checkbox v-for="pro in district[city].list" :label="pro" :key="pro" class="check-sub">
-              {{pro}}</el-checkbox>
-          </el-checkbox-group>
+          <div class="checkGroup">
+            <el-checkbox-group class="checkGroup" v-model="district[city].listChecked" @change="handleCheckedDistrict(district[city].listChecked)">
+              <el-checkbox v-for="pro in district[city].list" :label="pro" :key="pro" class="check-sub">
+                {{pro}}</el-checkbox>
+            </el-checkbox-group>
+          </div>
         </div>
       </div>
     </template>
@@ -18,40 +20,11 @@
 </template>
 
 <script>
-  // const cityOptions = ['上海', '北京', '广州', '深圳'];
-  // const districtOptions = {
-  //   '上海': {
-  //     list: ['上海1', '上海2', '上海3'],
-  //     listChecked: ['上海1'],
-  //     checkAll: false,
-  //     isIndeterminate: true
-  //   },
-  //   '北京': {
-  //     list: ['北京1', '北京2', '北京3'],
-  //     listChecked: ['北京1', '北京3'],
-  //     checkAll: false,
-  //     isIndeterminate: true
-  //   },
-  //   '广州': {
-  //     list: ['广州1', '广州2', '广州3'],
-  //     listChecked: ['广州1', '广州2', '广州3'],
-  //     checkAll: true,
-  //     isIndeterminate: false
-  //   },
-  //   '深圳': {
-  //     list: ['深圳1', '深圳2', '深圳3'],
-  //     listChecked: ['深圳1', '深圳2', '深圳3'],
-  //     checkAll: true,
-  //     isIndeterminate: false
-  //   }
-  // }
   export default {
     data() {
       return {
         checkAll: false,
-        // cities: cityOptions,
         isIndeterminate: true,
-        // district: Object.assign(districtOptions),
         currentSelection: ''
       };
     },
@@ -105,11 +78,14 @@
       handleCheckedDistrict(value) {
         let checkedCount = value.length;
         let districtOne = this.district[this.currentSelection];
+        console.log('value ', value, ' disone ', districtOne);
         districtOne.checkAll = checkedCount === districtOne.list.length;
         districtOne.isIndeterminate = checkedCount > 0 && checkedCount < districtOne.list.length;
         this.checkAllFn();
-        console.log('handleCheckedDistrict ', this.checkedCities, 'value', value, 'disone ',
-          districtOne, this.checkedCities);
+      },
+      hideDistrict() {
+        console.log('hide ', 'set current')
+        this.currentSelection = '';
       },
       showDistrict(city) {
         if (this.currentSelection === city) {
@@ -118,12 +94,16 @@
           this.currentSelection = city;
         }
       },
-      choosedistrict() {}
     },
-    mounted() {
-      console.log(this.district);
+    created() {
+      document.addEventListener('click.hideDistrict', this.hideDistrict.bind(this));
+    },
+    destroyed() {
+      document.removeEventListener('click.hideDistrict', this.hideDistrict);
+
     }
   };
+
 </script>
 <style scoped>
   .wrapper {
@@ -168,4 +148,5 @@
     background-color: #eee;
     z-index: 10;
   }
+
 </style>
