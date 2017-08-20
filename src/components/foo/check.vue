@@ -1,16 +1,12 @@
 <template>
   <div class="wrapper">
-    <!-- <el-checkbox :label="city" :key="city" class="check" @change="choosedistrict(city)">{{city}}
-        </el-checkbox> -->
-    <el-checkbox class="checkAll" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">华东</el-checkbox>
+    <areaInfo :areaOptions="areaOptions"></areaInfo>
+    <!-- <el-checkbox class="checkAll" :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">华东</el-checkbox>
     <el-checkbox-group class="checkGroup" v-model="checkedCities" @change="handleCheckedCitiesChange">
       <template v-for="(city, index) in cities">
         <el-checkbox class="check-sub" :label="city" :key="city" @change="handleCheckedCityChange(city)" :indeterminate="district[city].isIndeterminate">{{city}}</el-checkbox>
-        <!-- <el-checkbox class="check-sub"  :key="index" 
-        :indeterminate="district[city].isIndeterminate" 
-        v-model="district[city].checkAll" @change="handleCheckCityChange($event, city)">{{city}}</el-checkbox> -->
-        <div class="pop" :key="index">
-          <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click="showDistrict($event,city)"></i>
+ <div class="pop" :key="index">
+          <i :class="['el-icon--right', 'arrow-down', currentSelection!==city?'el-icon-caret-bottom': 'el-icon-caret-top']" @click.stop.prevent="showDistrict($event,city)"></i>
           <div class="popover" v-show="currentSelection===city">
             <el-checkbox-group class="checkGroup" v-model="district[city].listChecked" >
               <el-checkbox v-for="pro in district[city].list" :label="pro" :key="pro" class="check-sub" @click="handleCheckedDistrict($event)">
@@ -19,11 +15,55 @@
           </div>
         </div>
       </template>
-    </el-checkbox-group>
+    </el-checkbox-group> -->
   </div>
 </template>
 
 <script>
+import areaInfo from './area.vue';
+const ainfo= [
+  {
+    name: '华东',
+    include: {
+          '上海': {
+      list: ['上海1', '上海2', '上海3'],
+      listChecked: ['上海1'],
+      checkAll: false,
+      isIndeterminate: true
+    },
+    '北京': {
+      list: ['北京1', '北京2', '北京3'],
+      listChecked: ['北京1', '北京3'],
+      checkAll: false,
+      isIndeterminate: true
+    },
+    '广州': {
+      list: ['广州1', '广州2', '广州3'],
+      listChecked: ['广州1', '广州2', '广州3'],
+      checkAll: true,
+      isIndeterminate: false
+    },
+    }
+  },
+    {
+    name: '华北',
+    include: {
+          '吉林': {
+      list: ['吉林1', '吉林2', '吉林3'],
+      listChecked: ['吉林1'],
+      checkAll: false,
+      isIndeterminate: true
+    },
+    '东北': {
+      list: ['东北1', '东北2', '东北3'],
+      listChecked: ['东北1', '东北3'],
+      checkAll: false,
+      isIndeterminate: true
+    },
+
+    }
+  }
+];
   const cityOptions = ['上海', '北京', '广州', '深圳'];
   // const cityChecked = [true, true, false, false];
   const district = {
@@ -55,6 +95,7 @@
   export default {
     data() {
       return {
+        areaOptions: ainfo,
         // checkAll: true,
         // checkedCities: ['广州', '深圳'],
         cities: cityOptions,
@@ -138,10 +179,8 @@
         console.log('city click handleCheckedCityChange ', city,this.district[city])
       }, 
       handleCheckedDistrict(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        let value = this.district[currentSelection].listChecked;
-        console.log('value ', value)
+        e.stopPropagation;
+        console.log('event ',value);
         let checkedCount = value.length;
         let districtOne = this.district[this.currentSelection];
         districtOne.checkedAll = checkedCount === districtOne.list.length;
@@ -153,19 +192,22 @@
 
       },
       hideDistrict(){
-this.currentSelection = '';
+        this.currentSelection = '';
       },
       showDistrict(e,city) {
         e.stopPropagation();
-        if (this.currentSelection === city) {
-          this.currentSelection = '';
-        } else {
-          this.currentSelection = city;
-        }
+        // if (this.currentSelection === city) {
+        //   this.currentSelection = '';
+        // } else {
+          this.currentSelection = this.currentSelection === ''?city: '';
+        // }
       },
       choosedistrict() {
 
       }
+    },
+    components: {
+      areaInfo
     },
     mounted() {
       console.log(this.district);
