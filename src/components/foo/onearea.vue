@@ -20,15 +20,19 @@
 </template>
 
 <script>
-    import {
-    SET_AREA_ID 
-} from '@/store/mutation-types';
+  import {
+    SET_AREA_ID
+  } from '@/store/mutation-types';
+  import {
+    mapGetters,
+    mapActions
+  } from 'vuex';
   export default {
     data() {
       return {
         checkAll: false,
         isIndeterminate: true,
-        currentSelection: ''
+        // currentSelection: ''
       };
     },
     props: {
@@ -45,7 +49,11 @@
         type: String
       }
     },
+    computed: {
+      ...mapGetters(['currentSelection']),
+    },
     methods: {
+       ...mapActions(['getTime10']),
       handleCheckAllChange(event) {
         this.isIndeterminate = false;
         Object.keys(this.district).forEach((item) => {
@@ -79,29 +87,43 @@
         console.log('checkAllFn ', this.district, this.checkAll)
       },
       handleCheckedDistrict(value) {
+        console.log('cehc ', this.currentSelection);
         let checkedCount = value.length;
         let districtOne = this.district[this.currentSelection];
         console.log('value ', value, ' disone ', districtOne);
         districtOne.checkAll = checkedCount === districtOne.list.length;
         districtOne.isIndeterminate = checkedCount > 0 && checkedCount < districtOne.list.length;
         this.checkAllFn();
+        this.getTime10('234');
+        // this.getTime10();
       },
       hideDistrict() {
         console.log('hide ', 'set current')
-        this.currentSelection = '';
+        // this.currentSelection = '';
+        this.$store.commit(SET_AREA_ID, '');
+
       },
       showDistrict(city) {
         if (this.currentSelection === city) {
-          this.currentSelection = '';
+          this.$store.commit(SET_AREA_ID, '');
+
         } else {
-          this.currentSelection = city;
+         this.$store.commit(SET_AREA_ID, city);
+
         }
-          this.$store.commit(SET_AREA_ID , this.currentSelection);
-            console.log('store ', this.$store.state);
+        // this.$store.commit(SET_AREA_ID, this.currentSelection);
+        console.log('store ', this.currentSelection);
       },
     },
     created() {
       document.addEventListener('click', this.hideDistrict.bind(this));
+    },
+    mounted() {
+      //  this.currentSelection= this.$store.state.area.id;
+      console.log('store ', this.$store.state, ' currentSelection ', this.currentSelection);
+      // console.log('\n lala ', this.getTime10)
+      // this.getTime10();
+
     },
     destroyed() {
       document.removeEventListener('click', this.hideDistrict);

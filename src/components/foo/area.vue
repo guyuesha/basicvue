@@ -43,7 +43,7 @@
             }
         },
         mounted(){
-            this.$store.commit(SET_AREA_ID , 10);
+            // this.$store.commit(SET_AREA_ID , 10);
             console.log('store ', this.$store.state);
         }
 

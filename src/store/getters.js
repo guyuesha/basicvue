@@ -1,4 +1,4 @@
 // area Id
-export const innId = state => {
+export const currentSelection = state => {
     return state.area.id;
 };

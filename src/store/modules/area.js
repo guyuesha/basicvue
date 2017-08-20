@@ -2,14 +2,14 @@ import * as types from '../mutation-types';
 
 // initial state
 const state = {
-    id: 0,
+    id: '',
 
 };
 
 // mutations
 const mutations = {
-    [types.SET_AREA_ID](state, id) {
-        state.id = id;
+    [types.SET_AREA_ID](state, nid) {
+        state.id = nid;
     },
 };
 
