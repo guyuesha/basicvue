@@ -8,8 +8,10 @@
 
 <script>
 import navigation from '@/components/nav';
+import store from '@/store';
 export default {
   name: 'app',
+  store,
   components: {
     navigation
   }

@@ -15,7 +15,9 @@
 </template>
 <script>
     import onearea from './onearea';
-    
+    import {
+    SET_AREA_ID 
+} from '@/store/mutation-types';
     export default {
         data() {
             return {
@@ -39,6 +41,10 @@
             show() {
                 this.areaVisition = true
             }
+        },
+        mounted(){
+            this.$store.commit(SET_AREA_ID , 10);
+            console.log('store ', this.$store.state);
         }
 
     }

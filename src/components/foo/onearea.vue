@@ -20,6 +20,9 @@
 </template>
 
 <script>
+    import {
+    SET_AREA_ID 
+} from '@/store/mutation-types';
   export default {
     data() {
       return {
@@ -93,13 +96,15 @@
         } else {
           this.currentSelection = city;
         }
+          this.$store.commit(SET_AREA_ID , this.currentSelection);
+            console.log('store ', this.$store.state);
       },
     },
     created() {
-      document.addEventListener('click.hideDistrict', this.hideDistrict.bind(this));
+      document.addEventListener('click', this.hideDistrict.bind(this));
     },
     destroyed() {
-      document.removeEventListener('click.hideDistrict', this.hideDistrict);
+      document.removeEventListener('click', this.hideDistrict);
 
     }
   };
