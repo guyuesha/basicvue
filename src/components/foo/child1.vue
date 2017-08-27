@@ -7,7 +7,7 @@
 </el-breadcrumb>
      child1 
      i am 
-     <span v-for="item in list">
+     <span v-for="item in list" :key="item.name">
      list  {{item.name}} ---- {{item.age}} <br>
        </span>
       </div>    
